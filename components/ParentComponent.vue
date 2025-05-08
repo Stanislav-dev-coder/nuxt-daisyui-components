@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import MidComponent from "./UserComponent.vue"
+import UserComponent from "./UserComponent.vue"
 
 // Ссылка на окно
-const modalRef = shallowRef<InstanceType<typeof MidComponent> | undefined>()
+const modalRef = shallowRef<InstanceType<typeof UserComponent> | undefined>()
 
 // Статус отображения окна
 const isModalVisible = ref(false)
@@ -15,11 +15,8 @@ const open = async () => {
 }
 
 // Закрыть окно
-const close = async () => {
-  modalRef.value?.close()
-  setTimeout(() => {
-    isModalVisible.value = false // Убираем видимость модалки после завершения действия
-  }, 200)
+const close = () => {
+  isModalVisible.value = false
 }
 </script>
 
@@ -34,6 +31,6 @@ const close = async () => {
 
   <!-- Модальные окна -->
   <section>
-    <MidComponent v-if="isModalVisible" ref="modalRef" @closed="close" />
+    <UserComponent v-if="isModalVisible" ref="modalRef" @closed="close" />
   </section>
 </template>
