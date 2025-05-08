@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import UserComponent from "./UserComponent.vue"
+import type UserComponent from "./UserComponent.vue"
 
 // Ссылка на окно
 const modalRef = shallowRef<InstanceType<typeof UserComponent> | undefined>()
