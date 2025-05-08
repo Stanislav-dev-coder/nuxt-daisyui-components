@@ -1,20 +1,38 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+// События
+defineEmits(["close", "closed"])
+
+// Ссылка на окно
+const modalRef = shallowRef<HTMLDialogElement | undefined>()
+
+// Открыть окно
+const open = () => modalRef.value?.showModal()
+
+const close = () => modalRef.value?.close()
+
+defineExpose({
+  open,
+  close,
+})
+</script>
 
 <template>
-  <dialog open class="modal modal-bottom sm:modal-middle">
-    <div class="modal-box">
-      <header>
-        <h3 class="text-lg font-bold">Hello!</h3>
-      </header>
-      <main>
-        <slot name="body" />
-      </main>
-      <footer class="modal-action">
-        <form method="dialog">
-          <!-- if there is a button in form, it will close the modal -->
-          <button class="btn">Close</button>
-        </form>
-      </footer>
-    </div>
-  </dialog>
+  <Teleport to="body">
+    <dialog
+      ref="modalRef"
+      class="modal modal-bottom sm:modal-middle"
+      @close="$emit('closed')">
+      <div class="modal-box flex flex-col gap-6">
+        <header>
+          <h1 class="text-xl font-bold">Обертка окна</h1>
+        </header>
+        <main class="flex flex-col gap-6">
+          <slot name="body" />
+        </main>
+        <footer class="flex flex-row-reverse">
+          <button class="btn btn-error" @click="$emit('closed')">Закрыть</button>
+        </footer>
+      </div>
+    </dialog>
+  </Teleport>
 </template>
